@@ -1,0 +1,14 @@
+@font-face {
+  font-family: regular;
+  src: url(../src/fonts/Inter-Regular.otf);
+}
+
+@font-face {
+  font-family: bold;
+  src: url(../src/fonts/Inter-Bold.otf);
+}
+
+:root {
+  --font-regular: "regular", sans-serif;
+  --font-bold: "bold", sans-serif;
+}

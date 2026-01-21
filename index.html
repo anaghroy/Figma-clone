@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figma Clone</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div class="editor">
+      <!-- Left Sidebar -->
+      <aside class="sidebar left">
+        <h3>Layers</h3>
+        <ul class="layers">
+          <li class="active" data-id="rect-1">Rectangle 1</li>
+        </ul>
+      </aside>
+
+      <!-- Canvas Area -->
+      <main class="canvas-wrapper">
+        <div class="canvas">
+          <!-- Elements will appear here -->
+          <div class="element selected" data-id="rect-1" style="top: 80px; left: 120px">
+            <div class="rotation-handle"></div>
+            <div class="resize-handle tl"></div>
+            <div class="resize-handle tr"></div>
+            <div class="resize-handle bl"></div>
+            <div class="resize-handle br"></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Sidebar -->
+      <aside class="sidebar right properties-panel">
+        <!-- Header -->
+        <div class="panel-header">
+          <span class="title">Rectangle 1</span>
+          <div class="icons">
+            <button>⤢</button>
+            <button>⋮</button>
+          </div>
+        </div>
+
+        <!-- Position -->
+        <section class="panel-section">
+          <h4>Position</h4>
+
+          <div class="row two">
+            <div class="field">
+              <label>X</label>
+              <input id="pos-x" type="number" />
+            </div>
+            <div class="field">
+              <label>Y</label>
+              <input id="pos-y" type="number" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Rotate</label>
+              <input id="rotate" type="number" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Layout -->
+        <section class="panel-section">
+          <h4>Layout</h4>
+
+          <div class="row two">
+            <div class="field">
+              <label>W</label>
+              <input id="width" type="number" />
+            </div>
+            <div class="field">
+              <label>H</label>
+              <input id="height" type="number" />
+            </div>
+          </div>
+
+          <div class="checkbox">
+            <input type="checkbox" />
+            <label>Clip content</label>
+          </div>
+        </section>
+
+        <!-- Appearance -->
+        <section class="panel-section">
+          <h4>Appearance</h4>
+
+          <div class="row two">
+            <div class="field">
+              <label>Opacity</label>
+              <input type="number" value="100" />
+            </div>
+            <div class="field">
+              <label>Radius</label>
+              <input type="number" value="0" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Fill -->
+        <section class="panel-section">
+          <h4>Fill</h4>
+
+          <div class="row two">
+            <input type="color" value="#ffffff" />
+            <input type="number" value="100" />
+          </div>
+        </section>
+
+        <!-- Stroke -->
+        <section class="panel-section">
+          <h4>Stroke</h4>
+          <button class="add-btn">＋ Add stroke</button>
+        </section>
+
+        <!-- Effects -->
+        <section class="panel-section">
+          <h4>Effects</h4>
+          <button class="add-btn">＋ Add effect</button>
+        </section>
+      </aside>
+
+      <!-- Bottom Toolbar -->
+      <footer class="toolbar">
+        <button>⬚ Rectangle</button>
+        <button>T Text</button>
+        <button>↻ Rotate</button>
+      </footer>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
