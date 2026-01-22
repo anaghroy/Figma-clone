@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Figma Clone</title>
+    <link
+      rel="shortcut icon"
+      href="./src/assets/favicon.png"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
@@ -11,22 +16,14 @@
       <!-- Left Sidebar -->
       <aside class="sidebar left">
         <h3>Layers</h3>
-        <ul class="layers">
-          <li class="active" data-id="rect-1">Rectangle 1</li>
-        </ul>
+        <ul class="layers"></ul>
+        <span class="layer-controls"> </span>
       </aside>
 
       <!-- Canvas Area -->
       <main class="canvas-wrapper">
-        <div class="canvas">
-          <!-- Elements will appear here -->
-          <div class="element selected" data-id="rect-1" style="top: 80px; left: 120px">
-            <div class="rotation-handle"></div>
-            <div class="resize-handle tl"></div>
-            <div class="resize-handle tr"></div>
-            <div class="resize-handle bl"></div>
-            <div class="resize-handle br"></div>
-          </div>
+        <div class="canvas-viewport">
+          <div class="canvas"></div>
         </div>
       </main>
 
@@ -34,11 +31,7 @@
       <aside class="sidebar right properties-panel">
         <!-- Header -->
         <div class="panel-header">
-          <span class="title">Rectangle 1</span>
-          <div class="icons">
-            <button>⤢</button>
-            <button>⋮</button>
-          </div>
+          <span class="title">PROPERTIES</span>
         </div>
 
         <!-- Position -->
@@ -59,7 +52,7 @@
           <div class="row">
             <div class="field">
               <label>Rotate</label>
-              <input id="rotate" type="number" />
+              <input id="rotation" type="number" />
             </div>
           </div>
         </section>
@@ -80,8 +73,8 @@
           </div>
 
           <div class="checkbox">
-            <input type="checkbox" />
-            <label>Clip content</label>
+            <input type="checkbox" id="clip-content" />
+            <label for="clip-content">Clip content</label>
           </div>
         </section>
 
@@ -92,11 +85,17 @@
           <div class="row two">
             <div class="field">
               <label>Opacity</label>
-              <input type="number" value="100" />
+              <input
+                type="number"
+                id="opacity-input"
+                value="100"
+                min="0"
+                max="100"
+              />
             </div>
             <div class="field">
               <label>Radius</label>
-              <input type="number" value="0" />
+              <input type="number" id="radius-input" value="0" min="0" />
             </div>
           </div>
         </section>
@@ -106,31 +105,126 @@
           <h4>Fill</h4>
 
           <div class="row two">
-            <input type="color" value="#ffffff" />
-            <input type="number" value="100" />
+            <input type="color" id="fill-color" value="#ffffff" />
+            <input
+              type="number"
+              class="border"
+              id="fill-opacity"
+              value="100"
+              min="0"
+              max="100"
+            />
           </div>
         </section>
 
         <!-- Stroke -->
         <section class="panel-section">
           <h4>Stroke</h4>
-          <button class="add-btn">＋ Add stroke</button>
+          <div class="row two">
+            <input type="color" id="stroke-color" value="#000000" />
+            <input
+              type="number"
+              class="border"
+              id="stroke-width"
+              value="1"
+              min="0"
+            />
+          </div>
+        </section>
+        
+        <!-- Image setting -->
+        <section class="panel-section">
+          <h4>Image setting</h4>
+          <select id="imageFit">
+            <option value="cover">Fill</option>
+            <option value="contain">Fit</option>
+            <option value="fill">Stretch</option>
+          </select>
+        </section>
+        <!--Mask Shape-->
+        <section class="panel-section">
+          <div class="field">
+            <h4>Mask Shape</h4>
+            <select id="mask-shape">
+              <option value="rect">Rectangle</option>
+              <option value="circle">Circle</option>
+              <option value="rounded">Rounded</option>
+              <option value="ellipse">Ellipse</option>
+            </select>
+          </div>
         </section>
 
-        <!-- Effects -->
+        <!-- Text -->
         <section class="panel-section">
-          <h4>Effects</h4>
-          <button class="add-btn">＋ Add effect</button>
+          <h4>Text</h4>
+
+          <div class="row">
+            <select id="font-family">
+              <option value="Arial">Arial</option>
+              <option value="Poppins">Poppins</option>
+              <option value="Inter">Inter</option>
+              <option value="Georgia">Georgia</option>
+              <option value="monospace">Monospace</option>
+            </select>
+          </div>
+
+          <div class="row two">
+            <input type="number" id="font-size" value="16" min="8" />
+            <select id="font-weight">
+              <option value="400">Regular</option>
+              <option value="500">Medium</option>
+              <option value="600">Semi Bold</option>
+              <option value="700">Bold</option>
+            </select>
+          </div>
+        </section>
+
+        <!--Alignment text-->
+        <section class="panel-section">
+          <h4>Text Alignment</h4>
+
+          <div class="row">
+            <button class="btn-arrow" data-align="left">⬅</button>
+            <button class="btn-arrow" data-align="center">⬌</button>
+            <button class="btn-arrow" data-align="right">➡</button>
+          </div>
+
+          <div class="field">
+            <h4>Line Height</h4>
+            <input id="line-height" type="number" value="1.4" step="0.1" />
+          </div>
         </section>
       </aside>
 
       <!-- Bottom Toolbar -->
       <footer class="toolbar">
-        <button>⬚ Rectangle</button>
-        <button>T Text</button>
-        <button>↻ Rotate</button>
+        <button id="rect-btn">Rectangle</button>
+        <button id="text-btn">Text</button>
+
+        <button onclick="saveCanvas()">💾 Save</button>
+        <button onclick="loadCanvas()">Load</button>
+        <div class="export-wrapper">
+          <button id="export-btn">Export</button>
+
+          <div class="export-menu" id="export-menu">
+            <button id="export-json">Export JSON</button>
+            <button id="export-html">Export HTML</button>
+          </div>
+        </div>
+        <button id="import-image">Import Image</button>
+        <input type="file" id="image-input" accept="image/*" hidden />
       </footer>
     </div>
     <script src="script.js"></script>
+    <script src="layers.js"></script>
+    <script src="delete.js"></script>
+    <script src="fillcolor.js"></script>
+    <script src="stroke.js"></script>
+    <script src="appearance.js"></script>
+    <script src="alignment.js"></script>
+    <script src="image.js"></script>
+    <script src="mask.js"></script>
+    <script src="localStroage.js"></script>
+    <script src="export.js"></script>
   </body>
 </html>
