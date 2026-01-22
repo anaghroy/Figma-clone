@@ -9,8 +9,11 @@ const exportHTMLBtn = document.getElementById("export-html");
 function getCanvasData() {
   return [...document.querySelectorAll(".element")].map((el) => {
     const img = el.querySelector("img");
+    const isText = el.classList.contains("text");
 
     return {
+      id: el.dataset.id,
+      type: isText ? "text" : "box",
       left: el.style.left,
       top: el.style.top,
       width: el.style.width,
@@ -20,6 +23,17 @@ function getCanvasData() {
       background: el.style.backgroundColor || "transparent",
       borderRadius: el.style.borderRadius || "0px",
 
+      text: isText
+        ? {
+            content: el.innerHTML,
+            fontSize: el.style.fontSize || "16px",
+            fontFamily: el.style.fontFamily || "sans-serif",
+            color: el.style.color || "#000",
+            textAlign: el.style.textAlign || "left",
+            lineHeight: el.style.lineHeight || "normal",
+            fontWeight: el.style.fontWeight || "400",
+          }
+        : null,
       image: img
         ? {
             src: img.src,
@@ -69,6 +83,24 @@ function exportHTML() {
           />
         `
         : "";
+      const textHTML =
+        el.type === "text"
+          ? `
+          <div style="
+            font-size:${el.text.fontSize};
+            font-family:${el.text.fontFamily};
+            color:${el.text.color};
+            text-align:${el.text.textAlign};
+            line-height:${el.text.lineHeight};
+            font-weight:${el.text.fontWeight};
+            width:100%;
+            height:100%;
+            outline:none;
+          ">
+            ${el.text.content}
+          </div>
+        `
+          : "";
 
       return `
         <div style="
@@ -84,6 +116,7 @@ function exportHTML() {
           overflow:${el.image?.clip ? "hidden" : "visible"};
         ">
           ${imageHTML}
+          ${textHTML}
         </div>
       `;
     })
